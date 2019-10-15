@@ -2,7 +2,7 @@
 
 '''
 运用神经网络，做回归
-2019-09-21
+2019-09-21（10-15第一次复习更新）
 '''
 import torch
 from torch.autograd import Variable

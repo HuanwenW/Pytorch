@@ -6,6 +6,8 @@
 
 命令4: git push origin master  
 
+Username:HuanwenW
+Password:242099@hh
 
 //远程库拉代码，自己一个人写通常不需要这个操作
 git pull origin master

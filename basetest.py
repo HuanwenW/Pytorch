@@ -15,7 +15,7 @@ import torchvision.transforms as transforms
 
 #--------- 遗留问题 --------#
 
-# -------   Numpy VS torch ----------- #
+# -------  基础2.1  Numpy VS torch ----------- #
 '''
 np_data = np.arange(6).reshape((2, 3)) # 先产生6个数，再变成 2行3列 的矩阵形式
 torch_data = torch.from_numpy(np_data) # 将 np_data 转换为 torch 形式
@@ -66,11 +66,11 @@ print(
     '\n tensor_data_matrix2:', tensor_data_matrix.dot(tensor_data_matrix),  # 全部数据展平计算 1*1+2*2+3*3+4*4=30
 )
 
-print(
-    '\n matual',
-    '\n numpy1:', np.matmul(data_matrix,data_matrix),
-    '\n tensor_data_matrix1:', torch.mm(tensor_data_matrix,tensor_data_matrix),
-)
+# print(
+#     '\n matual',
+#     '\n numpy1:', np.matmul(data_matrix,data_matrix),
+#     '\n tensor_data_matrix1:', torch.mm(tensor_data_matrix,tensor_data_matrix),
+# )
 '''
 # ------ Linear regression -----  #
 ''' 
@@ -88,18 +88,23 @@ print(w.grad)
 print(b.grad)
 '''
 
-# -----------  variable  ---------- #
+# ----------- 基础2.2 variable  ---------- #
 
 from torch.autograd import Variable
-tensor = torch.FloatTensor([[1, 2],[3, 4]])
-variable = Variable(tensor,requires_grad = True)
+
+tensor = torch.FloatTensor([[1, 2],[3, 4]]) # 定义一个二维张量
+variable = Variable(tensor,requires_grad = True) # requires_grad参数 表示： 参不参与误差反向传播，要不要计算梯度
+print(tensor)
+print(variable)
+print('*'*50)
 
 t_out = torch.mean(tensor*tensor)  # x^2 = 1*1+2*2+3*3+4*4=30
-v_out = torch.mean(variable*variable)
+v_out = torch.mean(variable*variable) # 在计算图中添加一个计算步骤，计算误差反向传递的时候有用，而上面的tensor无此功能
 
 print(t_out)
 print(v_out)
 
+print('#'*50)
 v_out.backward()  #反向传递更新
 
 # v_out = 1/4*sum(var*var)

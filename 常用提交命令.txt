@@ -2,7 +2,7 @@
 
 命令2: git commit -m "提交标注信息"
 
-命令3: git  remote add origin https://github.com/HuanwenW/MyPostImag.git  
+命令3: git  remote add origin https://github.com/HuanwenW/Pytorch.git  
 
 命令4: git push origin master  
 

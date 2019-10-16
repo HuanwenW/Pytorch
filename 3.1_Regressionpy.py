@@ -42,8 +42,8 @@ class Net(torch.nn.Module): # 继承torch的Module
 
     def forward(self, x): # Module中的forward功能
         # 正向传播输入值，神经网络分析出输出值
-        x = F.relu(self.hidden(x))      # activation function for hidden layer
-        x = self.predict(x)             # linear output
+        x = F.relu(self.hidden(x))      # activation function for hidden layer(隐含层的线性值)
+        x = self.predict(x)             # linear output 输出值，但是这个不是预测值，预测值还需要另外计算
         return x
 
 
@@ -55,7 +55,7 @@ print('*'*60)
 # 训练网络
 
 # optimizer是训练工具
-optimizer = torch.optim.SGD(net.parameters(), lr=0.2) # 传入net的所有参数和学习率
+optimizer = torch.optim.SGD(net.parameters(), lr=0.2) # 使用 随机梯度下降方法 传入net的所有参数和学习率
 loss_func = torch.nn.MSELoss()  # 预测值和真实值的误差计算公式（均方差）
 
 # 画图
@@ -64,16 +64,17 @@ plt.ion()   # something about plotting
 for t in range(200):
     prediction = net(x)     # 喂给 net 训练数据x ，（实质是 调用forward（））
     loss = loss_func(prediction, y)  # 计算两者误差 must be (1. nn output, 2. target)两个位置不能反
-
+# 以下3步是优化过程
     optimizer.zero_grad()   # 清空上一步的残余更新参数值
     loss.backward()         # 误差反向传播, 计算参数更新值
     optimizer.step()        # 将参数更新值施加到net的parameters上
 
+
     if t % 5 == 0:
         # plot and show learning process
         plt.cla()
-        plt.scatter(x.data.numpy(), y.data.numpy())
-        plt.plot(x.data.numpy(), prediction.data.numpy(), 'r-', lw=5)
+        plt.scatter(x.data.numpy(), y.data.numpy()) # 打印原始数据
+        plt.plot(x.data.numpy(), prediction.data.numpy(), 'r-', lw=5) # 打印学习过程
         plt.text(0.5, 0, 'Loss=%.4f' % loss.data.numpy(), fontdict={'size': 20, 'color':  'red'})
         plt.pause(0.1)
 
